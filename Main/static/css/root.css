@@ -1,0 +1,27 @@
+.dark-mode {
+    --color-crimson: var(--color-midnight-mischief);
+    --color-neutra: #201E1E;
+    --color-fundo: var(--color-deep-blue);
+    --color-hover-cor: var(--color-midnight-mischief);
+    --color-shell-pink: var(--color-teal-temptation);
+    --color-fiery-frenzy:var(--color-midnight-mischief);
+    --color-mine-shaft: var(--color-snowflake);
+}
+
+:root {
+    --color-midnight: #010005;
+    --color-emerald-envy: #28963E;
+    --color-snowflake: #FDFDFD;
+    --color-red-temp: #F20409;
+    --color-mine-shaft: #201E1E;
+    --color-shell-pink: #F97A82;
+    --color-deep-blue: #000E1D;
+    --color-fundo: #F5F5F5;
+    --color-crimson: #AB0B12;
+    --color-fiery-frenzy: #B30D0D;
+    --color-midnight-mischief: #28425E;
+    --color-teal-temptation: #6098A2;
+    --color-amarelo-brilho: #FAFF00;
+    --color-hover-cor: #d9d9d9;
+    --color-neutra: #B8B8B8;
+}

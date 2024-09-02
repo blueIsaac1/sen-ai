@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>SEN.AI</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static '/css/main.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Iceland&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <script src="{% static 'js/main.js' %}"></script>
+    <link rel="icon" type="image/x-icon" href="{% static '/images/LOGO_Gravata.png' %}">
+</head>
+<body class="corpoPagina">
+
+    <header class="topoPag">                                                                                                                                                                                                                    
+        <div class="divLogo">
+            <div class="logoContainer">
+                <img id="logoImg" class="logo" onclick="homeFunc()" src="/static/images/Logo_SenAI_NovaB.png" alt="">
+                <div class="tooltipLogo">Os pika</div>
+            </div>
+        </div>
+        <div class="divNav">
+            <label onclick="homeFunc()" class="trocaPag temaTexto">Início</label>
+            <label onclick="graficFunc()" class="trocaPag temaTexto">Gráfico</label>
+            <label onclick="uploadFunc()" class="trocaPag temaTexto">Upload</label>
+        </div>
+        <div class="divUser">
+            <div class="boxUser">
+                <div onclick="dropdownUser()" class="clickAreaDropUser">
+                    <div class="userText temaTexto">{{ username }}</div>
+                    <img id="userImg" src="/static/images/userImgRed.png" alt="">
+                </div>
+                <div class="contMenuUser">
+                    <div class="menuUser">
+                        <div class="trocarTema">
+                            <div class="tooltipTema">Mudar Tema</div>
+                            <label onclick="toggleDarkMode()" class="switch">
+                                <input id="toggle-theme" type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="sepUser"></div>
+                        <div onclick="" class="logout">Sair</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main class="corpoPag">
+
+        <div class="welcomeDiv">
+            <img id="welcomeImg" src="/static/images/welcomeImage.png" alt="">
+        </div>
+
+        <div class="graficDiv">
+            <div class="grafContainer">
+                <div class="contCircularGraf">
+                    <div class="grafico">
+                        {% if graph_url %}
+                        <h2>Gráfico</h2>
+                        <img class="graficImg" src="{{ graph_url }}" alt="Gráfico de Peças">
+                        {% else %}
+                            <p>Não há dados para exibir o gráfico.</p>
+                        {% endif %}
+                        <label onclick="" class="trocaPag"><a href="{% url 'main' %}?download_pdf=true" target="_blank">Gerar PDF</a></label>
+                    </div>
+                    <h1><div class="primeiraCorDiv"></div>BOM | <div class="segundaCorDiv"></div>RUIM</h1>
+                </div>
+                
+            </div>
+            <div class="tabelaGraf">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Coluna 1</th>
+                            <th>Coluna 2</th>
+                            <th>Coluna 3</th>
+                            <th>Coluna 4</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Aqui nós usamos o for pra passar pelo bacno e preencher a tabvela-->
+                        <tr>
+                            <td>Dado 1A</td>
+                            <td>Dado 1B</td>
+                            <td>Dado 1C</td>
+                            <td>Dado 1D</td>
+                        </tr>
+                        <tr>
+                            <td class="tdFinal" colspan="4">
+                                <img src="/static/images/logoDS.png" alt="">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>  
+        </div>
+
+        <div class="uploadDiv">
+            <h1>Faça upload da imagem com a peça à ser verificada:</h1>
+            <label id="drop-area" for="file-upload">
+                <img id="uploadImg" src="/static/images/uploadImg.png" alt="">
+            </label>
+            <form method="post" enctype="multipart/form-data" id="upload-form">
+                {% csrf_token %}
+                <input id="file-upload" type="file" name="file" multiple />
+                <br>
+                {{ form.idPeca.label }} {{ form.idPeca }}
+                <br>
+                <button type="submit">Enviar</button>
+            </form>
+            <h1>Clique para colocar a imagem:</h1>
+            <h4>IA de análise de imagens | SEN.AI</h4>
+            <table id="image-table">
+                <thead>
+                    <tr>
+                        <th>Imagem</th>
+                        <th>Nome do Arquivo</th>
+                        <th>Tipo</th>
+                    </tr>
+                </thead>
+                <tbody id="image-list">
+                    <!-- As imagens adicionadas aparecerão aqui -->
+                </tbody>
+            </table>
+     
+        </div>
+        
+    </main>
+
+    <footer id="footer" class="fimPag">
+        <div class="primeiroFooter">
+            <h2 class="temaTexto">v0.0.0</h2>
+            <div onclick="toggleFooterSize()" class="contSeta">
+                <i id="seta" class='bx bx-chevron-up setaExpandFooter temaTexto'>
+                </i>
+                <span class="tooltip" id="tooltipSeta">Clique para Expandir</span>
+            </div>
+            <h2 class="temaTexto">| SEN.IA</h2>
+        </div>
+        <div class="segundoFooter">
+            <h1>Rodapé Inferior</h1>
+        </div>
+    </footer>
+    <script src="/static/js/uploadImage.js"></script>
+</body>
+</html>

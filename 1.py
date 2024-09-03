@@ -47,4 +47,4 @@ if 'situPeca' in df.columns and 'nomePeca' in df.columns:
         plt.close()
 else:
     print("As colunas 'situPeca' e/ou 'nomePeca' não foram encontradas no DataFrame.")
-    print(df)
+    print(df, 'oi')

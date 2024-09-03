@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect 
 from django.contrib.auth import authenticate, login as login_django
+from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 from .forms import UploadForm
 from .models import AnalisePeca
 from django.utils import timezone
@@ -21,7 +23,6 @@ from reportlab.lib.pagesizes import A4
 from datetime import datetime
 matplotlib.use('Agg')
 
-#logout
 #upload de varios arquivos
 #popup na hora do upload
 #for para preencher a tabela graficos
@@ -37,7 +38,9 @@ margin_top = 1 * inch
 margin_bottom = 1 * inch
 
 @csrf_exempt
+@login_required(login_url='/auth/')
 def main(request):
+    is_staff = request.user.is_staff 
     if request.method == 'POST':
         form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
@@ -59,6 +62,11 @@ def main(request):
         return JsonResponse({'success': False, 'message': 'Erro no envio do formulário.'})
     
     elif request.method == 'GET' and 'download_pdf' in request.GET:
+        matplotlib.rcParams['text.color'] = 'black'
+        matplotlib.rcParams['axes.labelcolor'] = 'black'
+        matplotlib.rcParams['xtick.color'] = 'black'
+        matplotlib.rcParams['ytick.color'] = 'black'
+        matplotlib.rcParams['axes.edgecolor'] = 'black'
         grafico_pizza_pandas()
         grafico_consulta_pandas()   
         df = consulta_sql_pdf()
@@ -112,8 +120,16 @@ def main(request):
         response = HttpResponse(buffer, content_type='application/pdf')
         response['Content-Disposition'] = 'attachment; filename=relatorio_situpeca.pdf'
         return response
+    elif request.method == 'GET' and 'logout_user' in request.GET:
+        logout(request)  # Realiza o logout do usuário
+        return redirect('/auth/')  # Redireciona para a página de login
     else:
-        # Geração do gráfico
+        # Geração do gráfico (lightMode)
+        matplotlib.rcParams['text.color'] = 'black'
+        matplotlib.rcParams['axes.labelcolor'] = 'black'
+        matplotlib.rcParams['xtick.color'] = 'black'
+        matplotlib.rcParams['ytick.color'] = 'black'
+        matplotlib.rcParams['axes.edgecolor'] = 'black'
         conn = sqlite3.connect("./db.sqlite3") 
         query = """
         SELECT a.idLog, a.situPeca, a.idUsuario, a.datahora, a.idPeca_id, b.nomePeca
@@ -126,7 +142,7 @@ def main(request):
             pivot_table = df.pivot_table(index='nomePeca', columns='situPeca', aggfunc='size', fill_value=0)
             # Criar o gráfico
             fig, ax = plt.subplots(figsize=(12,8))
-            pivot_table.plot(kind='bar', stacked=False, ax=ax, color=['#ec1c24', '#f49494'])
+            pivot_table.plot(kind='bar', stacked=False, ax=ax, color=['#AB0B12', '#F97A82'])
             ax.set_xlabel('Nome da Peça')
             ax.set_title('Número de Eventos por Nome da Peça e Situação')
             # Salvar o gráfico em um buffer
@@ -140,6 +156,39 @@ def main(request):
             graph_url = 'data:image/png;base64,' + base64.b64encode(buf.getvalue()).decode('utf-8')
         else:
             graph_url = None
+        
+        # Geração do Gráfico (darkMode)
+        matplotlib.rcParams['text.color'] = 'white'
+        matplotlib.rcParams['axes.labelcolor'] = 'white'
+        matplotlib.rcParams['xtick.color'] = 'white'
+        matplotlib.rcParams['ytick.color'] = 'white'
+        matplotlib.rcParams['axes.edgecolor'] = 'white'
+        conn = sqlite3.connect("./db.sqlite3") 
+        query = """
+        SELECT a.idLog, a.situPeca, a.idUsuario, a.datahora, a.idPeca_id, b.nomePeca
+        FROM Main_analisepeca a
+        JOIN Main_infospecas b on a.idPeca_id = b.idPeca;
+        """
+        df = pd.read_sql_query(query, conn)
+        conn.close()
+        if 'nomePeca' in df.columns:
+            pivot_table = df.pivot_table(index='nomePeca', columns='situPeca', aggfunc='size', fill_value=0)
+            # Criar o gráfico
+            fig, ax = plt.subplots(figsize=(12,8))
+            pivot_table.plot(kind='bar', stacked=False, ax=ax, color=['#28425E', '#6098A2'])
+            ax.set_xlabel('Nome da Peça')
+            ax.set_title('Número de Eventos por Nome da Peça e Situação')
+            # Salvar o gráfico em um buffer
+            buf = io.BytesIO()
+            plt.savefig(buf, format='png', bbox_inches='tight', dpi=200, transparent=True)
+            buf.seek(0)
+            plt.close(fig)
+            plt.xticks(rotation=0)  
+            plt.tight_layout()
+        # Converter buffer em base64
+            graph_url_dark = 'data:image/png;base64,' + base64.b64encode(buf.getvalue()).decode('utf-8')
+        else:
+            graph_url_dark = None
 
     # Outros dados
     form = UploadForm()
@@ -153,12 +202,19 @@ def main(request):
         'form': form,
         'username': username,
         'graph_url': graph_url, # Passar a URL do gráfico para o template
+        'graph_url_dark': graph_url_dark, # Passar a URL do gráfico DARK para o template
+        'is_staff': is_staff
     })
 
 
 
 # GRAFICO PARA TESTE
 def graficos(request):
+    matplotlib.rcParams['text.color'] = 'black'
+    matplotlib.rcParams['axes.labelcolor'] = 'black'
+    matplotlib.rcParams['xtick.color'] = 'black'
+    matplotlib.rcParams['ytick.color'] = 'black'
+    matplotlib.rcParams['axes.edgecolor'] = 'black'
     conn = sqlite3.connect("./db.sqlite3") 
     query = """
     SELECT a.idLog, a.situPeca, a.idUsuario, a.datahora, a.idPeca_id, b.nomePeca
@@ -189,6 +245,7 @@ def graficos(request):
     return render(request, 'graficos.html', {
         'graph_url': graph_url  # Passar a URL do gráfico para o template
     })
+
 
 
 

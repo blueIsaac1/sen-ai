@@ -109,6 +109,8 @@ function toggleDarkMode() {
     const imageLogo = document.getElementById('logoImg');
     const imageUser = document.getElementById('userImg');
     const imageUpload = document.getElementById('uploadImg');
+    const imageGraficLight = document.getElementById('graficImage');
+    const imageGraficDark = document.getElementById('graficImageDark')
 
     if (toggle.checked) {
         body.classList.add('dark-mode');
@@ -116,12 +118,15 @@ function toggleDarkMode() {
         imageLogo.src = "/static/images/Logo_SenAI_NovaDark.png"
         imageUser.src = "/static/images/UserImgDark.png"
         imageUpload.src = "/static/images/UploadImgDark.png"
+        imageGraficLight.style = "opacity: 0%"
+        imageGraficDark.style = "opacity: 100%"
     } else {
         body.classList.remove('dark-mode');
         imageWelcome.src = "/static/images/welcomeImage.png"
         imageLogo.src = "/static/images/Logo_SenAI_NovaB.png"
         imageUser.src = "/static/images/UserImgRed.png"
         imageUpload.src = "/static/images/UploadImg.png"
+        imageGraficLight.style = "opacity: 100%"
+        imageGraficDark.style = "opacity: 0%"
     }
 }
-

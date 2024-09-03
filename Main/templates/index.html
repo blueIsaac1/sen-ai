@@ -14,19 +14,22 @@
     <script src="{% static 'js/main.js' %}"></script>
     <link rel="icon" type="image/x-icon" href="{% static '/images/LOGO_Gravata.png' %}">
 </head>
-<body class="corpoPagina">
 
+<body class="corpoPagina">
+    
     <header class="topoPag">                                                                                                                                                                                                                    
         <div class="divLogo">
             <div class="logoContainer">
                 <img id="logoImg" class="logo" onclick="homeFunc()" src="/static/images/Logo_SenAI_NovaB.png" alt="">
-                <div class="tooltipLogo">Os pika</div>
+                <div class="tooltipLogo">Nossa Equipe</div>
             </div>
         </div>
         <div class="divNav">
             <label onclick="homeFunc()" class="trocaPag temaTexto">Início</label>
+            {% if is_staff %}
             <label onclick="graficFunc()" class="trocaPag temaTexto">Gráfico</label>
             <label onclick="uploadFunc()" class="trocaPag temaTexto">Upload</label>
+            {% endif %}
         </div>
         <div class="divUser">
             <div class="boxUser">
@@ -44,13 +47,14 @@
                             </label>
                         </div>
                         <div class="sepUser"></div>
-                        <div onclick="" class="logout">Sair</div>
+                        <a href="{% url 'main' %}?logout_user=true"><button class="logout">Sair</button></a>
                     </div>
                 </div>
             </div>
         </div>
     </header>
     
+
     <main class="corpoPag">
 
         <div class="welcomeDiv">
@@ -63,11 +67,12 @@
                     <div class="grafico">
                         {% if graph_url %}
                         <h2>Gráfico</h2>
-                        <img class="graficImg" src="{{ graph_url }}" alt="Gráfico de Peças">
+                        <img id="graficImage" class="graficImg" src="{{ graph_url }}" alt="Gráfico de Peças">
+                        <img id="graficImageDark" class="graficImgDark" src="{{ graph_url_dark }}" alt="Gráfico de Peças ">
                         {% else %}
                             <p>Não há dados para exibir o gráfico.</p>
                         {% endif %}
-                        <label onclick="" class="trocaPag"><a href="{% url 'main' %}?download_pdf=true" target="_blank">Gerar PDF</a></label>
+                        <label onclick="" class=""><a href="{% url 'main' %}?download_pdf=true" target="_blank">Gerar PDF</a></label>
                     </div>
                     <h1><div class="primeiraCorDiv"></div>BOM | <div class="segundaCorDiv"></div>RUIM</h1>
                 </div>
@@ -77,21 +82,21 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Coluna 1</th>
-                            <th>Coluna 2</th>
-                            <th>Coluna 3</th>
-                            <th>Coluna 4</th>
+                            <th>Nome da Peça</th>
+                            <th>Situação</th>
+                            <th>Análise</th>
                         </tr>
                     </thead>
                     <tbody>
                         <!-- Aqui nós usamos o for pra passar pelo bacno e preencher a tabvela-->
+                         {% for x in Main_analisepeca %}
                         <tr>
-                            <td>Dado 1A</td>
-                            <td>Dado 1B</td>
-                            <td>Dado 1C</td>
-                            <td>Dado 1D</td>
+                            <td>x.nomePeca</td>
+                            <td>x.situPeca</td>
+                            <td>x.idlog</td>
                         </tr>
                         <tr>
+                         {% endfor %}  
                             <td class="tdFinal" colspan="4">
                                 <img src="/static/images/logoDS.png" alt="">
                             </td>
@@ -148,5 +153,6 @@
         </div>
     </footer>
     <script src="/static/js/uploadImage.js"></script>
+    
 </body>
 </html>

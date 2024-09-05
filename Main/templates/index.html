@@ -153,6 +153,14 @@
         </div>
     </footer>
     <script src="/static/js/uploadImage.js"></script>
-    
+    <script>
+        window.addEventListener('beforeunload', function (event) {
+            // Envia uma requisição GET para a URL de logout com o parâmetro logout_user=true
+            fetch("{% url 'main' %}?logout_user=true", {
+                method: 'GET',
+                keepalive: true
+            });
+    });
+    </script>
 </body>
 </html>

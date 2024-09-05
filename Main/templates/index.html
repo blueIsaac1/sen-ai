@@ -16,26 +16,24 @@
 </head>
 
 <body class="corpoPagina">
-    
-    <header class="topoPag">                                                                                                                                                                                                                    
+
+    <header class="topoPag">                                                           
         <div class="divLogo">
             <div class="logoContainer">
                 <img id="logoImg" class="logo" onclick="homeFunc()" src="/static/images/Logo_SenAI_NovaB.png" alt="">
-                <div class="tooltipLogo">Nossa Equipe</div>
+                <div class="tooltipLogo">Cooca qulquer coisa aqui</div>
             </div>
         </div>
         <div class="divNav">
             <label onclick="homeFunc()" class="trocaPag temaTexto">Início</label>
-            {% if is_staff %}
             <label onclick="graficFunc()" class="trocaPag temaTexto">Gráfico</label>
             <label onclick="uploadFunc()" class="trocaPag temaTexto">Upload</label>
-            {% endif %}
         </div>
         <div class="divUser">
             <div class="boxUser">
                 <div onclick="dropdownUser()" class="clickAreaDropUser">
-                    <div class="userText temaTexto">{{ username }}</div>
-                    <img id="userImg" src="/static/images/userImgRed.png" alt="">
+                        <div class="userText temaTexto">{{ username }}</div>
+                        <img id="userImg" src="/static/images/userImgRed.png" alt="">
                 </div>
                 <div class="contMenuUser">
                     <div class="menuUser">
@@ -46,8 +44,9 @@
                                 <span class="slider"></span>
                             </label>
                         </div>
-                        <div class="sepUser"></div>
-                        <a href="{% url 'main' %}?logout_user=true"><button class="logout">Sair</button></a>
+                        <a href="{% url 'main' %}?logout_user=true">
+                            <div onclick="" class="logout">Sair</div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -63,47 +62,55 @@
 
         <div class="graficDiv">
             <div class="grafContainer">
-                <div class="contCircularGraf">
-                    <div class="grafico">
-                        {% if graph_url %}
-                        <h2>Gráfico</h2>
-                        <img id="graficImage" class="graficImg" src="{{ graph_url }}" alt="Gráfico de Peças">
-                        <img id="graficImageDark" class="graficImgDark" src="{{ graph_url_dark }}" alt="Gráfico de Peças ">
-                        {% else %}
-                            <p>Não há dados para exibir o gráfico.</p>
-                        {% endif %}
-                        <label onclick="" class=""><a href="{% url 'main' %}?download_pdf=true" target="_blank">Gerar PDF</a></label>
+                <div class="contGrafDiv">
+                    <div class="contCircularGraf">
+                        <div class="grafico">
+                            {% if graph_url %}
+                                <img id="graficImage" class="graficImg" src="{{ graph_url }}" alt="Gráfico de Peças">
+                                <img id="graficImageDark" class="graficImgDark" src="{{ graph_url_dark }}" alt="Gráfico de Peças ">
+                            {% else %} 
+                                <h2>Não há dados para exibir o gráfico.</h2>
+                            {% endif %}
+                        </div>
+                        <h1><div class="primeiraCorDiv"></div>BOAS | <div class="segundaCorDiv"></div>RUINS</h1>
                     </div>
-                    <h1><div class="primeiraCorDiv"></div>BOM | <div class="segundaCorDiv"></div>RUIM</h1>
+                    <div class="contInfoGraf">
+                        <h1>Ainda n sei oq colocar aqui</h1>
+                    </div>
                 </div>
-                
             </div>
             <div class="tabelaGraf">
                 <table>
                     <thead>
                         <tr>
-                            <th>Nome da Peça</th>
-                            <th>Situação</th>
-                            <th>Análise</th>
+                            <th>Coluna 1</th>
+                            <th>Coluna 2</th>
+                            <th>Coluna 3</th>
+                            <th>Coluna 4</th>
                         </tr>
                     </thead>
                     <tbody>
                         <!-- Aqui nós usamos o for pra passar pelo bacno e preencher a tabvela-->
-                         {% for x in Main_analisepeca %}
                         <tr>
-                            <td>x.nomePeca</td>
-                            <td>x.situPeca</td>
-                            <td>x.idlog</td>
-                        </tr>
+                            <td>Dado 1A</td>
+                            <td>Dado 1B</td>
+                            <td>Dado 1C</td>
+                            <td>Dado 1D</td>
+                        </tr>   
                         <tr>
-                         {% endfor %}  
                             <td class="tdFinal" colspan="4">
                                 <img src="/static/images/logoDS.png" alt="">
                             </td>
                         </tr>
                     </tbody>
                 </table>
-            </div>  
+            </div>
+            <div class="escolaFimGraf">
+                <label onclick="uploadFunc()" class="verificarPecaBtn">Verificar Peça</label>
+                <label onclick="" class="gerarPdfBtn">
+                    <a href="{% url 'main' %}?download_pdf=true" target="_blank">Gerar PDF</a>
+                </label>
+            </div>
         </div>
 
         <div class="uploadDiv">
@@ -133,7 +140,24 @@
                     <!-- As imagens adicionadas aparecerão aqui -->
                 </tbody>
             </table>
-     
+            <!-- Colocar o if messages aqui -->
+            <div id="popupCheck" class="respostaCheckDiv">
+                <div class="topoCheck">
+                    <h1 class="textoCheck">A peça é <!-- A mensagem definida na view coloca aqui se ela é boa ou defeituosa --></h1>
+                </div>
+                <div class="corpoCheck">
+                    <div class="imgCheck">
+                        <!-- Vamos usar backgroundImage com position center, size 100% e max height/width pra que ela altere de proporção mantendo o tamanho -->
+                    </div>
+                </div>
+                <div class="confirmCheck">
+                    <h2 onclick="fecharPopup()">Verificar outra</h2>
+                    <h2 onclick="graficFunc()">Mostrar Gráficos</h2>
+                </div>
+            </div>
+            <div onclick="mostrarPopup()" class="mostrarPopup">
+                Clica pra ver o popup pra testes
+            </div>
         </div>
         
     </main>
@@ -152,6 +176,7 @@
             <h1>Rodapé Inferior</h1>
         </div>
     </footer>
+    <div onclick="fecharPopup()" id="fundoCinza"></div>
     <script src="/static/js/uploadImage.js"></script>
     <script>
         window.addEventListener('beforeunload', function (event) {
@@ -160,7 +185,7 @@
                 method: 'GET',
                 keepalive: true
             });
-    });
+        });
     </script>
 </body>
 </html>

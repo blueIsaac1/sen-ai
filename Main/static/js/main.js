@@ -66,7 +66,7 @@ function homeFunc() {
     document.querySelector('.graficDiv').style.display = 'none';
     document.querySelector('.uploadDiv').style.display = 'none';
     document.querySelector('.trocaPag:nth-child(1)').style.boxShadow = 'inset 0px -0.2vh 0px 0px var(--color-crimson)';
-    window.location.hash = 'inicio'; 
+    window.location.hash = 'inicio';
     document.title = "Sen.AI - Ínicio";
 }
 
@@ -78,8 +78,20 @@ function graficFunc() {
     document.querySelector('.trocaPag:nth-child(2)').style.boxShadow = 'inset 0px -0.2vh 0px 0px var(--color-crimson)';
     window.location.hash = 'graficos';
     document.title = "Sen.AI - Gráficos";
+    fecharPopup()
 }
-
+function fecharPopup(){
+    const fundoCinza = document.getElementById('fundoCinza');
+    const popup = document.getElementById('popupCheck');
+    fundoCinza.classList.remove('fundoCinza');
+    popup.style.display = 'none'
+}
+function mostrarPopup(){
+    const fundoCinza = document.getElementById('fundoCinza');
+    const popup = document.getElementById('popupCheck');
+    fundoCinza.classList.add('fundoCinza');
+    popup.style.display = 'grid'
+}
 function uploadFunc() {
     resetShadows();
     document.querySelector('.welcomeDiv').style.display = 'none';
@@ -118,15 +130,15 @@ function toggleDarkMode() {
         imageLogo.src = "/static/images/Logo_SenAI_NovaDark.png"
         imageUser.src = "/static/images/UserImgDark.png"
         imageUpload.src = "/static/images/UploadImgDark.png"
-        imageGraficLight.style = "opacity: 0%"
-        imageGraficDark.style = "opacity: 100%"
+        imageGraficLight.style = "display: none"
+        imageGraficDark.style = "display: grid"
     } else {
         body.classList.remove('dark-mode');
         imageWelcome.src = "/static/images/welcomeImage.png"
         imageLogo.src = "/static/images/Logo_SenAI_NovaB.png"
         imageUser.src = "/static/images/UserImgRed.png"
         imageUpload.src = "/static/images/UploadImg.png"
-        imageGraficLight.style = "opacity: 100%"
-        imageGraficDark.style = "opacity: 0%"
+        imageGraficLight.style = "display: grid"
+        imageGraficDark.style = "display: none"
     }
 }

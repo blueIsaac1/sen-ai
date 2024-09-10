@@ -5,7 +5,7 @@ import os
 
 try:
     # Conectar ao banco de dados e consultar dados
-    conn = sqlite3.connect("db.sqlite3")
+    conn = sqlite3.connect("./db.sqlite3")
     query = """
     SELECT a.idLog, a.situPeca, a.idUsuario, a.datahora, a.idPeca_id, b.nomePeca
     FROM Main_analisepeca a

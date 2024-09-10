@@ -9,7 +9,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Conectar ao banco de dados SQLite
-conn = sqlite3.connect("db.sqlite3")
+conn = sqlite3.connect("./db.sqlite3")
 
 # Consulta SQL para buscar os dados
 query = """

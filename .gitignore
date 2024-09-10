@@ -17,4 +17,8 @@ __pycache__
 .venv
 *.pyc
 venv
+<<<<<<< HEAD
 >>>>>>> 930e0c7 (Teste de primeiro git)
+=======
+.env
+>>>>>>> e36e6a5 (Adição de popups sobre qualidade das peças e um sobre nós)

@@ -112,11 +112,26 @@
         </div>
 
         <div class="graficDiv">
+<<<<<<< HEAD
             <div class="grafContainer">
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
 >>>>>>> 9a0e756 (Alteração realizada no Index.html, main.css e main.js)
+=======
+            <div class="contCircularGraf">
+                <div class="grafico">
+                    {% if graph_url %}
+                        <img id="graficImage" class="graficImg" src="{{ graph_url }}" alt="Gráfico de Peças">
+                        <img id="graficImageDark" class="graficImgDark" src="{{ graph_url_dark }}" alt="Gráfico de Peças ">
+                    {% else %} 
+                        <h2>Não há dados para exibir o gráfico.</h2>
+                    {% endif %}
+                </div>
+                <h1><div class="primeiraCorDiv"></div>BOAS | <div class="segundaCorDiv"></div>RUINS</h1>
+            </div>
+            <!-- <div class="grafContainer">
+>>>>>>> e36e6a5 (Adição de popups sobre qualidade das peças e um sobre nós)
                 <div class="contGrafDiv">
                     <div class="contCircularGraf">
                         <div class="grafico">
@@ -134,6 +149,7 @@
 <<<<<<< HEAD
                     </div>
                 </div>
+<<<<<<< HEAD
 =======
                 <div class="contCircularGraf">
                     <div class="grafico">
@@ -155,6 +171,9 @@
 =======
 >>>>>>> 9a0e756 (Alteração realizada no Index.html, main.css e main.js)
             </div>
+=======
+            </div> -->
+>>>>>>> e36e6a5 (Adição de popups sobre qualidade das peças e um sobre nós)
             <div class="tabelaGraf">
                 <table>
                     <thead>
@@ -216,7 +235,6 @@
 >>>>>>> 9a0e756 (Alteração realizada no Index.html, main.css e main.js)
             </div>
             <div class="escolaFimGraf">
-                <label onclick="uploadFunc()" class="verificarPecaBtn">Verificar Peça</label>
                 <label onclick="" class="gerarPdfBtn">
                     <a href="{% url 'main' %}?download_pdf=true" target="_blank">Gerar PDF</a>
                 </label>
@@ -234,16 +252,10 @@
             <label id="drop-area" for="file-upload">
                 <img id="uploadImg" src="/static/images/uploadImg.png" alt="">
             </label>
-            <form method="post" enctype="multipart/form-data" id="upload-form">
-                {% csrf_token %}
-                <input id="file-upload" type="file" name="file" multiple />
-                <br>
-                {{ form.idPeca.label }} {{ form.idPeca }}
-                <br>
-                <button type="submit">Enviar</button>
-            </form>
+
             <h1>Clique para colocar a imagem:</h1>
             <h4>IA de análise de imagens | SEN.AI</h4>
+<<<<<<< HEAD
             <table id="image-table">
                 <thead>
                     <tr>
@@ -260,6 +272,8 @@
 <<<<<<< HEAD
 =======
 >>>>>>> 9a0e756 (Alteração realizada no Index.html, main.css e main.js)
+=======
+>>>>>>> e36e6a5 (Adição de popups sobre qualidade das peças e um sobre nós)
             <!-- Colocar o if messages aqui -->
             <div id="popupCheck" class="respostaCheckDiv">
                 <div class="topoCheck">
@@ -269,10 +283,24 @@
                     <div class="imgCheck">
                         <!-- Vamos usar backgroundImage com position center, size 100% e max height/width pra que ela altere de proporção mantendo o tamanho -->
                     </div>
-                </div>
-                <div class="confirmCheck">
-                    <h2 onclick="fecharPopup()">Verificar outra</h2>
-                    <h2 onclick="graficFunc()">Mostrar Gráficos</h2>
+                    
+                    <table id="image-table">
+                        <tbody id="image-list">
+                            <!-- As imagens adicionadas aparecerão aqui -->
+                        </tbody>
+                    </table>
+                    <form method="post" enctype="multipart/form-data" id="upload-form">
+                        {% csrf_token %}
+                        <input id="file-upload" type="file" name="file" multiple />
+                        <br>
+                        <div class="select">
+                            {{ form.idPeca.label }} {{ form.idPeca }}
+                        </div>
+                        <br>
+                        <button type="submit">Enviar</button>
+                    </form>
+                    <div class="testeCliqueConfirma" onclick="respostaPecaBoa()">Clica pra ver o popup de peça boa</div>
+                    <div class="testeCliqueConfirma" onclick="respostaPecaRuim()">Clica pra ver o popup de peça ruim</div>
                 </div>
             </div>
             <div onclick="mostrarPopup()" class="mostrarPopup">
@@ -285,9 +313,7 @@
 =======
 >>>>>>> 9a0e756 (Alteração realizada no Index.html, main.css e main.js)
         </div>
-        
     </main>
-
     <footer id="footer" class="fimPag">
         <div class="primeiroFooter">
             <h2 class="temaTexto">v0.0.0</h2>
@@ -304,6 +330,7 @@
     </footer>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <div onclick="fecharPopup()" id="fundoCinza"></div>
     <script src="/static/js/uploadImage.js"></script>
     <script>
@@ -315,7 +342,60 @@
     <div onclick="fecharPopup()" id="fundoCinza"></div>
 >>>>>>> 9a0e756 (Alteração realizada no Index.html, main.css e main.js)
     <script src="/static/js/uploadImage.js"></script>
+=======
+>>>>>>> e36e6a5 (Adição de popups sobre qualidade das peças e um sobre nós)
     
+    <div onclick="fecharPopup()" id="fundoCinza"></div>
+    <div id="popupInfo" class="popupInfoDiv">
+        <div class="topo">
+            <img class="imgLogoPopup" src="/static/images/Logo_SenAI_NovaB.png" alt="">
+            <svg onclick="fecharPopup()" xmlns="http://www.w3.org/2000/svg" class="bi bi-x-lg" viewBox="0 0 16 16">
+                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+            </svg>
+        </div>
+        <div class="textoApresenta">
+            <h1>Sla escreve qualquer abobrinha aqui que ta bom, acho que isso é o suficiente como apresentação rá]pida</h1>
+        </div>
+    </div>
+    <div onclick="mostrarPopupInfo()" class="sobrePopUpBtn">
+        ?
+    </div>
+    <div class="divResultado">
+        <svg onclick="fecharPopup()" xmlns="http://www.w3.org/2000/svg" class="fechar bi bi-x-lg" viewBox="0 0 16 16">
+            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+        </svg>
+        <div id="respostaPecaBoa" class="validaBox boa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" class="bi bi-check2" viewBox="0 0 16 16">
+                <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
+            </svg>
+            <h2 class="resultText">Peça Boa</h2>
+        </div>
+        <div id="respostaPecaRuim" class="validaBox ruim">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-frown" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                <path d="M4.285 12.433a.5.5 0 0 0 .683-.183A3.5 3.5 0 0 1 8 10.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.5 4.5 0 0 0 8 9.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683M7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5m4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5"/>
+            </svg>
+            <h2 class="resultText">Peça defeituosa</h2>
+        </div>
+        <h4>Utilize de nossa inteligência artificial para verificar outras peças</h4>
+        <h2 onclick="graficFunc()" class="btnSaida graficos">Gráficos</h2>
+        <h2 onclick="uploadFunc()" class="btnSaida outra">Verificar outra peça</h2>
+    </div>
+
+    <script src="/static/js/uploadImage.js"></script>
+    <script>
+        window.addEventListener('beforeunload', function (event) {
+            // Envia uma requisição GET para a URL de logout com o parâmetro logout_user=true
+            fetch("{% url 'main' %}?logout_user=true", {
+                method: 'GET',
+                keepalive: true
+            });
+        });
+    </script>
 </body>
+<<<<<<< HEAD
 </html>
 >>>>>>> 930e0c7 (Teste de primeiro git)
+=======
+</html>
+>>>>>>> e36e6a5 (Adição de popups sobre qualidade das peças e um sobre nós)

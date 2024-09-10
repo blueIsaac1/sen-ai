@@ -228,16 +228,50 @@ function graficFunc() {
 }
 function fecharPopup(){
     const fundoCinza = document.getElementById('fundoCinza');
-    const popup = document.getElementById('popupCheck');
+    const popupCheck = document.getElementById('popupCheck');
+    const popupInfo = document.getElementById('popupInfo');
+    const popupResultado = document.querySelector('.divResultado');
     fundoCinza.classList.remove('fundoCinza');
-    popup.style.display = 'none'
+    popupCheck.style.display = 'none'
+    popupInfo.style.display = 'none'
+    popupResultado.style.display = 'none'
 }
+
+function confirmarPeca(){
+    fecharPopup()
+}
+
 function mostrarPopup(){
     const fundoCinza = document.getElementById('fundoCinza');
     const popup = document.getElementById('popupCheck');
     fundoCinza.classList.add('fundoCinza');
     popup.style.display = 'grid'
 }
+function mostrarPopupInfo(){
+    const fundoCinza = document.getElementById('fundoCinza');
+    const popup = document.getElementById('popupInfo');
+    
+    fundoCinza.classList.add('fundoCinza');
+    popup.style.display = 'flex';
+    popup.classList.add('show');
+}
+
+function ativarDivResposta(){
+    fecharPopup()
+    fundoCinza.classList.add('fundoCinza');
+    document.querySelector('.divResultado').style.display = 'flex';
+}
+function respostaPecaBoa(){
+    ativarDivResposta();
+    document.getElementById('respostaPecaBoa').style.display = 'flex';
+    document.getElementById('respostaPecaRuim').style.display = 'none';
+}
+function respostaPecaRuim(){
+    ativarDivResposta();
+    document.getElementById('respostaPecaRuim').style.display = 'flex';
+    document.getElementById('respostaPecaBoa').style.display = 'none';
+}
+
 function uploadFunc() {
     resetShadows();
     document.querySelector('.welcomeDiv').style.display = 'none';
@@ -246,6 +280,7 @@ function uploadFunc() {
     document.querySelector('.trocaPag:nth-child(3)').style.boxShadow = 'inset 0px -0.2vh 0px 0px var(--color-crimson)';
     window.location.hash = 'upload';
     document.title = "Sen.AI - Uploud";
+    fecharPopup();
 }
 
 function dropdownUser() {
@@ -269,6 +304,7 @@ function toggleDarkMode() {
     const imageUpload = document.getElementById('uploadImg');
     const imageGraficLight = document.getElementById('graficImage');
     const imageGraficDark = document.getElementById('graficImageDark')
+    const imgLogoPopup = document.querySelector('.imgLogoPopup');
 
     if (toggle.checked) {
         body.classList.add('dark-mode');
@@ -278,6 +314,7 @@ function toggleDarkMode() {
         imageUpload.src = "/static/images/UploadImgDark.png"
         imageGraficLight.style = "display: none"
         imageGraficDark.style = "display: grid"
+        imgLogoPopup.src = "/static/images/Logo_SenAI_NovaDark.png"
     } else {
         body.classList.remove('dark-mode');
         imageWelcome.src = "/static/images/welcomeImage.png"
@@ -286,6 +323,11 @@ function toggleDarkMode() {
         imageUpload.src = "/static/images/UploadImg.png"
         imageGraficLight.style = "display: grid"
         imageGraficDark.style = "display: none"
+        imgLogoPopup.src = "/static/images/Logo_SenAI_NovaB.png"
     }
+<<<<<<< HEAD
 }
 >>>>>>> 930e0c7 (Teste de primeiro git)
+=======
+}
+>>>>>>> e36e6a5 (Adição de popups sobre qualidade das peças e um sobre nós)

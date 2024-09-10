@@ -2,4 +2,13 @@
 *.pyc
 venv
 .env
-IA_Imagens/
+*.log
+*.pot
+*.pyc
+__pycache__
+.vscode/* 
+!.vscode/settings.json 
+!.vscode/tasks.json 
+!.vscode/launch.json 
+!.vscode/extensions.json 
+.history

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .venv
 *.pyc
 venv
@@ -12,3 +13,8 @@ __pycache__
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
+=======
+.venv
+*.pyc
+venv
+>>>>>>> 930e0c7 (Teste de primeiro git)

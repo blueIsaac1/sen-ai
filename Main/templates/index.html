@@ -16,24 +16,45 @@
 </head>
 
 <body class="corpoPagina">
+<<<<<<< HEAD
 
     <header class="topoPag">                                                           
         <div class="divLogo">
             <div class="logoContainer">
                 <img id="logoImg" class="logo" onclick="homeFunc()" src="/static/images/Logo_SenAI_NovaB.png" alt="">
                 <div class="tooltipLogo">Cooca qulquer coisa aqui</div>
+=======
+    
+    <header class="topoPag">                                                                                                                                                                                                                    
+        <div class="divLogo">
+            <div class="logoContainer">
+                <img id="logoImg" class="logo" onclick="homeFunc()" src="/static/images/Logo_SenAI_NovaB.png" alt="">
+                <div class="tooltipLogo">Nossa Equipe</div>
+>>>>>>> 930e0c7 (Teste de primeiro git)
             </div>
         </div>
         <div class="divNav">
             <label onclick="homeFunc()" class="trocaPag temaTexto">Início</label>
+<<<<<<< HEAD
             <label onclick="graficFunc()" class="trocaPag temaTexto">Gráfico</label>
             <label onclick="uploadFunc()" class="trocaPag temaTexto">Upload</label>
+=======
+            {% if is_staff %}
+            <label onclick="graficFunc()" class="trocaPag temaTexto">Gráfico</label>
+            <label onclick="uploadFunc()" class="trocaPag temaTexto">Upload</label>
+            {% endif %}
+>>>>>>> 930e0c7 (Teste de primeiro git)
         </div>
         <div class="divUser">
             <div class="boxUser">
                 <div onclick="dropdownUser()" class="clickAreaDropUser">
+<<<<<<< HEAD
                         <div class="userText temaTexto">{{ username }}</div>
                         <img id="userImg" src="/static/images/userImgRed.png" alt="">
+=======
+                    <div class="userText temaTexto">{{ username }}</div>
+                    <img id="userImg" src="/static/images/userImgRed.png" alt="">
+>>>>>>> 930e0c7 (Teste de primeiro git)
                 </div>
                 <div class="contMenuUser">
                     <div class="menuUser">
@@ -44,9 +65,14 @@
                                 <span class="slider"></span>
                             </label>
                         </div>
+<<<<<<< HEAD
                         <a href="{% url 'main' %}?logout_user=true">
                             <div onclick="" class="logout">Sair</div>
                         </a>
+=======
+                        <div class="sepUser"></div>
+                        <a href="{% url 'main' %}?logout_user=true"><button class="logout">Sair</button></a>
+>>>>>>> 930e0c7 (Teste de primeiro git)
                     </div>
                 </div>
             </div>
@@ -62,6 +88,7 @@
 
         <div class="graficDiv">
             <div class="grafContainer">
+<<<<<<< HEAD
                 <div class="contGrafDiv">
                     <div class="contCircularGraf">
                         <div class="grafico">
@@ -78,19 +105,42 @@
                         <h1>Ainda n sei oq colocar aqui</h1>
                     </div>
                 </div>
+=======
+                <div class="contCircularGraf">
+                    <div class="grafico">
+                        {% if graph_url %}
+                        <h2>Gráfico</h2>
+                        <img id="graficImage" class="graficImg" src="{{ graph_url }}" alt="Gráfico de Peças">
+                        <img id="graficImageDark" class="graficImgDark" src="{{ graph_url_dark }}" alt="Gráfico de Peças ">
+                        {% else %}
+                            <p>Não há dados para exibir o gráfico.</p>
+                        {% endif %}
+                        <label onclick="" class=""><a href="{% url 'main' %}?download_pdf=true" target="_blank">Gerar PDF</a></label>
+                    </div>
+                    <h1><div class="primeiraCorDiv"></div>BOM | <div class="segundaCorDiv"></div>RUIM</h1>
+                </div>
+                
+>>>>>>> 930e0c7 (Teste de primeiro git)
             </div>
             <div class="tabelaGraf">
                 <table>
                     <thead>
                         <tr>
+<<<<<<< HEAD
                             <th>Coluna 1</th>
                             <th>Coluna 2</th>
                             <th>Coluna 3</th>
                             <th>Coluna 4</th>
+=======
+                            <th>Nome da Peça</th>
+                            <th>Situação</th>
+                            <th>Análise</th>
+>>>>>>> 930e0c7 (Teste de primeiro git)
                         </tr>
                     </thead>
                     <tbody>
                         <!-- Aqui nós usamos o for pra passar pelo bacno e preencher a tabvela-->
+<<<<<<< HEAD
                         <tr>
                             <td>Dado 1A</td>
                             <td>Dado 1B</td>
@@ -98,12 +148,23 @@
                             <td>Dado 1D</td>
                         </tr>   
                         <tr>
+=======
+                         {% for x in Main_analisepeca %}
+                        <tr>
+                            <td>x.nomePeca</td>
+                            <td>x.situPeca</td>
+                            <td>x.idlog</td>
+                        </tr>
+                        <tr>
+                         {% endfor %}  
+>>>>>>> 930e0c7 (Teste de primeiro git)
                             <td class="tdFinal" colspan="4">
                                 <img src="/static/images/logoDS.png" alt="">
                             </td>
                         </tr>
                     </tbody>
                 </table>
+<<<<<<< HEAD
             </div>
             <div class="escolaFimGraf">
                 <label onclick="uploadFunc()" class="verificarPecaBtn">Verificar Peça</label>
@@ -111,6 +172,9 @@
                     <a href="{% url 'main' %}?download_pdf=true" target="_blank">Gerar PDF</a>
                 </label>
             </div>
+=======
+            </div>  
+>>>>>>> 930e0c7 (Teste de primeiro git)
         </div>
 
         <div class="uploadDiv">
@@ -140,6 +204,7 @@
                     <!-- As imagens adicionadas aparecerão aqui -->
                 </tbody>
             </table>
+<<<<<<< HEAD
             <!-- Colocar o if messages aqui -->
             <div id="popupCheck" class="respostaCheckDiv">
                 <div class="topoCheck">
@@ -158,6 +223,9 @@
             <div onclick="mostrarPopup()" class="mostrarPopup">
                 Clica pra ver o popup pra testes
             </div>
+=======
+     
+>>>>>>> 930e0c7 (Teste de primeiro git)
         </div>
         
     </main>
@@ -176,9 +244,16 @@
             <h1>Rodapé Inferior</h1>
         </div>
     </footer>
+<<<<<<< HEAD
     <div onclick="fecharPopup()" id="fundoCinza"></div>
     <script src="/static/js/uploadImage.js"></script>
     <script>
     </script>
 </body>
 </html>
+=======
+    <script src="/static/js/uploadImage.js"></script>
+    
+</body>
+</html>
+>>>>>>> 930e0c7 (Teste de primeiro git)

@@ -1,14 +1,6 @@
 # Projeto Django com SQLite3
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 Bem-vindo ao projeto Django com SQLite3! Este é um projeto de exemplo que utiliza o Django, um framework web de alto nível para Python, e o SQLite3, um banco de dados leve e integrado...
-=======
-Bem-vindo ao projeto Django com SQLite3! Este é um projeto de exemplo que utiliza o Django, um framework web de alto nível para Python, e o SQLite3, um banco de dados leve e integrado.
->>>>>>> 930e0c7 (Teste de primeiro git)
-=======
-Bem-vindo ao projeto Django com SQLite3! Este é um projeto de exemplo que utiliza o Django, um framework web de alto nível para Python, e o SQLite3, um banco de dados leve e integrado...
->>>>>>> e36e6a5 (Adição de popups sobre qualidade das peças e um sobre nós)
 
 ## Sumário
 

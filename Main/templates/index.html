@@ -16,64 +16,24 @@
 </head>
 
 <body class="corpoPagina">
-<<<<<<< HEAD
-<<<<<<< HEAD
 
     <header class="topoPag">                                                           
         <div class="divLogo">
             <div class="logoContainer">
                 <img id="logoImg" class="logo" onclick="homeFunc()" src="/static/images/Logo_SenAI_NovaB.png" alt="">
                 <div class="tooltipLogo">Cooca qulquer coisa aqui</div>
-=======
-    
-    <header class="topoPag">                                                                                                                                                                                                                    
-        <div class="divLogo">
-            <div class="logoContainer">
-                <img id="logoImg" class="logo" onclick="homeFunc()" src="/static/images/Logo_SenAI_NovaB.png" alt="">
-                <div class="tooltipLogo">Nossa Equipe</div>
->>>>>>> 930e0c7 (Teste de primeiro git)
-=======
-
-    <header class="topoPag">                                                           
-        <div class="divLogo">
-            <div class="logoContainer">
-                <img id="logoImg" class="logo" onclick="homeFunc()" src="/static/images/Logo_SenAI_NovaB.png" alt="">
-                <div class="tooltipLogo">Cooca qulquer coisa aqui</div>
->>>>>>> 9a0e756 (Alteração realizada no Index.html, main.css e main.js)
             </div>
         </div>
         <div class="divNav">
             <label onclick="homeFunc()" class="trocaPag temaTexto">Início</label>
-<<<<<<< HEAD
-<<<<<<< HEAD
             <label onclick="graficFunc()" class="trocaPag temaTexto">Gráfico</label>
             <label onclick="uploadFunc()" class="trocaPag temaTexto">Upload</label>
-=======
-            {% if is_staff %}
-            <label onclick="graficFunc()" class="trocaPag temaTexto">Gráfico</label>
-            <label onclick="uploadFunc()" class="trocaPag temaTexto">Upload</label>
-            {% endif %}
->>>>>>> 930e0c7 (Teste de primeiro git)
-=======
-            <label onclick="graficFunc()" class="trocaPag temaTexto">Gráfico</label>
-            <label onclick="uploadFunc()" class="trocaPag temaTexto">Upload</label>
->>>>>>> 9a0e756 (Alteração realizada no Index.html, main.css e main.js)
         </div>
         <div class="divUser">
             <div class="boxUser">
                 <div onclick="dropdownUser()" class="clickAreaDropUser">
-<<<<<<< HEAD
-<<<<<<< HEAD
                         <div class="userText temaTexto">{{ username }}</div>
                         <img id="userImg" src="/static/images/userImgRed.png" alt="">
-=======
-                    <div class="userText temaTexto">{{ username }}</div>
-                    <img id="userImg" src="/static/images/userImgRed.png" alt="">
->>>>>>> 930e0c7 (Teste de primeiro git)
-=======
-                        <div class="userText temaTexto">{{ username }}</div>
-                        <img id="userImg" src="/static/images/userImgRed.png" alt="">
->>>>>>> 9a0e756 (Alteração realizada no Index.html, main.css e main.js)
                 </div>
                 <div class="contMenuUser">
                     <div class="menuUser">
@@ -84,20 +44,9 @@
                                 <span class="slider"></span>
                             </label>
                         </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
                         <a href="{% url 'main' %}?logout_user=true">
                             <div onclick="" class="logout">Sair</div>
                         </a>
-=======
-                        <div class="sepUser"></div>
-                        <a href="{% url 'main' %}?logout_user=true"><button class="logout">Sair</button></a>
->>>>>>> 930e0c7 (Teste de primeiro git)
-=======
-                        <a href="{% url 'main' %}?logout_user=true">
-                            <div onclick="" class="logout">Sair</div>
-                        </a>
->>>>>>> 9a0e756 (Alteração realizada no Index.html, main.css e main.js)
                     </div>
                 </div>
             </div>
@@ -112,13 +61,6 @@
         </div>
 
         <div class="graficDiv">
-<<<<<<< HEAD
-            <div class="grafContainer">
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 9a0e756 (Alteração realizada no Index.html, main.css e main.js)
-=======
             <div class="contCircularGraf">
                 <div class="grafico">
                     {% if graph_url %}
@@ -131,7 +73,6 @@
                 <h1><div class="primeiraCorDiv"></div>BOAS | <div class="segundaCorDiv"></div>RUINS</h1>
             </div>
             <!-- <div class="grafContainer">
->>>>>>> e36e6a5 (Adição de popups sobre qualidade das peças e um sobre nós)
                 <div class="contGrafDiv">
                     <div class="contCircularGraf">
                         <div class="grafico">
@@ -146,60 +87,21 @@
                     </div>
                     <div class="contInfoGraf">
                         <h1>Ainda n sei oq colocar aqui</h1>
-<<<<<<< HEAD
                     </div>
                 </div>
-<<<<<<< HEAD
-=======
-                <div class="contCircularGraf">
-                    <div class="grafico">
-                        {% if graph_url %}
-                        <h2>Gráfico</h2>
-                        <img id="graficImage" class="graficImg" src="{{ graph_url }}" alt="Gráfico de Peças">
-                        <img id="graficImageDark" class="graficImgDark" src="{{ graph_url_dark }}" alt="Gráfico de Peças ">
-                        {% else %}
-                            <p>Não há dados para exibir o gráfico.</p>
-                        {% endif %}
-                        <label onclick="" class=""><a href="{% url 'main' %}?download_pdf=true" target="_blank">Gerar PDF</a></label>
-=======
->>>>>>> 9a0e756 (Alteração realizada no Index.html, main.css e main.js)
-                    </div>
-                </div>
-<<<<<<< HEAD
-                
->>>>>>> 930e0c7 (Teste de primeiro git)
-=======
->>>>>>> 9a0e756 (Alteração realizada no Index.html, main.css e main.js)
-            </div>
-=======
             </div> -->
->>>>>>> e36e6a5 (Adição de popups sobre qualidade das peças e um sobre nós)
             <div class="tabelaGraf">
                 <table>
                     <thead>
                         <tr>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 9a0e756 (Alteração realizada no Index.html, main.css e main.js)
                             <th>Coluna 1</th>
                             <th>Coluna 2</th>
                             <th>Coluna 3</th>
                             <th>Coluna 4</th>
-<<<<<<< HEAD
-=======
-                            <th>Nome da Peça</th>
-                            <th>Situação</th>
-                            <th>Análise</th>
->>>>>>> 930e0c7 (Teste de primeiro git)
-=======
->>>>>>> 9a0e756 (Alteração realizada no Index.html, main.css e main.js)
                         </tr>
                     </thead>
                     <tbody>
                         <!-- Aqui nós usamos o for pra passar pelo bacno e preencher a tabvela-->
-<<<<<<< HEAD
-<<<<<<< HEAD
                         <tr>
                             <td>Dado 1A</td>
                             <td>Dado 1B</td>
@@ -207,44 +109,18 @@
                             <td>Dado 1D</td>
                         </tr>   
                         <tr>
-=======
-                         {% for x in Main_analisepeca %}
-=======
->>>>>>> 9a0e756 (Alteração realizada no Index.html, main.css e main.js)
-                        <tr>
-                            <td>Dado 1A</td>
-                            <td>Dado 1B</td>
-                            <td>Dado 1C</td>
-                            <td>Dado 1D</td>
-                        </tr>   
-                        <tr>
-<<<<<<< HEAD
-                         {% endfor %}  
->>>>>>> 930e0c7 (Teste de primeiro git)
-=======
->>>>>>> 9a0e756 (Alteração realizada no Index.html, main.css e main.js)
                             <td class="tdFinal" colspan="4">
                                 <img src="/static/images/logoDS.png" alt="">
                             </td>
                         </tr>
                     </tbody>
                 </table>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 9a0e756 (Alteração realizada no Index.html, main.css e main.js)
             </div>
             <div class="escolaFimGraf">
                 <label onclick="" class="gerarPdfBtn">
                     <a href="{% url 'main' %}?download_pdf=true" target="_blank">Gerar PDF</a>
                 </label>
             </div>
-<<<<<<< HEAD
-=======
-            </div>  
->>>>>>> 930e0c7 (Teste de primeiro git)
-=======
->>>>>>> 9a0e756 (Alteração realizada no Index.html, main.css e main.js)
         </div>
 
         <div class="uploadDiv">
@@ -252,28 +128,19 @@
             <label id="drop-area" for="file-upload">
                 <img id="uploadImg" src="/static/images/uploadImg.png" alt="">
             </label>
-
+            <form method="post" enctype="multipart/form-data" id="upload-form">
+                {% csrf_token %}
+                <input id="file-upload" type="file" name="file" multiple />
+                <br>
+                <div class="select">
+                    {{ form.idPeca.label }} {{ form.idPeca }}
+                </div>
+                <br>
+                <br>
+                <button type="submit" class="red-button">Enviar</button>
+            </form>
             <h1>Clique para colocar a imagem:</h1>
             <h4>IA de análise de imagens | SEN.AI</h4>
-<<<<<<< HEAD
-            <table id="image-table">
-                <thead>
-                    <tr>
-                        <th>Imagem</th>
-                        <th>Nome do Arquivo</th>
-                        <th>Tipo</th>
-                    </tr>
-                </thead>
-                <tbody id="image-list">
-                    <!-- As imagens adicionadas aparecerão aqui -->
-                </tbody>
-            </table>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 9a0e756 (Alteração realizada no Index.html, main.css e main.js)
-=======
->>>>>>> e36e6a5 (Adição de popups sobre qualidade das peças e um sobre nós)
             <!-- Colocar o if messages aqui -->
             <div id="popupCheck" class="respostaCheckDiv">
                 <div class="topoCheck">
@@ -289,16 +156,6 @@
                             <!-- As imagens adicionadas aparecerão aqui -->
                         </tbody>
                     </table>
-                    <form method="post" enctype="multipart/form-data" id="upload-form">
-                        {% csrf_token %}
-                        <input id="file-upload" type="file" name="file" multiple />
-                        <br>
-                        <div class="select">
-                            {{ form.idPeca.label }} {{ form.idPeca }}
-                        </div>
-                        <br>
-                        <button type="submit">Enviar</button>
-                    </form>
                     <div class="testeCliqueConfirma" onclick="respostaPecaBoa()">Clica pra ver o popup de peça boa</div>
                     <div class="testeCliqueConfirma" onclick="respostaPecaRuim()">Clica pra ver o popup de peça ruim</div>
                 </div>
@@ -306,12 +163,6 @@
             <div onclick="mostrarPopup()" class="mostrarPopup">
                 Clica pra ver o popup pra testes
             </div>
-<<<<<<< HEAD
-=======
-     
->>>>>>> 930e0c7 (Teste de primeiro git)
-=======
->>>>>>> 9a0e756 (Alteração realizada no Index.html, main.css e main.js)
         </div>
     </main>
     <footer id="footer" class="fimPag">
@@ -328,22 +179,6 @@
             <h1>Rodapé Inferior</h1>
         </div>
     </footer>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <div onclick="fecharPopup()" id="fundoCinza"></div>
-    <script src="/static/js/uploadImage.js"></script>
-    <script>
-    </script>
-</body>
-</html>
-=======
-=======
-    <div onclick="fecharPopup()" id="fundoCinza"></div>
->>>>>>> 9a0e756 (Alteração realizada no Index.html, main.css e main.js)
-    <script src="/static/js/uploadImage.js"></script>
-=======
->>>>>>> e36e6a5 (Adição de popups sobre qualidade das peças e um sobre nós)
     
     <div onclick="fecharPopup()" id="fundoCinza"></div>
     <div id="popupInfo" class="popupInfoDiv">
@@ -383,19 +218,5 @@
     </div>
 
     <script src="/static/js/uploadImage.js"></script>
-    <script>
-        window.addEventListener('beforeunload', function (event) {
-            // Envia uma requisição GET para a URL de logout com o parâmetro logout_user=true
-            fetch("{% url 'main' %}?logout_user=true", {
-                method: 'GET',
-                keepalive: true
-            });
-        });
-    </script>
 </body>
-<<<<<<< HEAD
 </html>
->>>>>>> 930e0c7 (Teste de primeiro git)
-=======
-</html>
->>>>>>> e36e6a5 (Adição de popups sobre qualidade das peças e um sobre nós)

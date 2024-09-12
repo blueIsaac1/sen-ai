@@ -1,9 +1,11 @@
-<<<<<<< HEAD
 from django.contrib import admin
+from Main.models import InfosPecas, AnalisePeca
 
-# Register your models here.
-=======
-from django.contrib import admin
+@admin.register(InfosPecas)
+class InfosPecasAdmin(admin.ModelAdmin):
+    pass
 
-# Register your models here.
->>>>>>> 930e0c7 (Teste de primeiro git)
+@admin.register(AnalisePeca)
+class AnalisePecaAdmin(admin.ModelAdmin):
+    pass
+

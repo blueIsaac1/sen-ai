@@ -15,27 +15,60 @@ import sqlite3
 import matplotlib.pyplot as plt
 import matplotlib
 import io
+import os
 import base64
 from reportlab.lib.units import inch
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import SimpleDocTemplate, Table, Paragraph, Spacer, TableStyle, Image
 from reportlab.lib.pagesizes import A4
 from datetime import datetime
+from keras.preprocessing.image import load_img, img_to_array
+from tensorflow.keras.models import load_model
+import numpy as np
+from django.conf import settings
 matplotlib.use('Agg')
 
-#upload de varios arquivos
-#popup na hora do upload
-#for para preencher a tabela graficos
-#conteudo no footer
-#grafico pizza na parte dos graficos
-    
+#fix
 
+model_path = os.path.join(settings.MEDIA_ROOT_2, 'meu_modelo.keras')
 
-# Margens
-margin_left = 1 * inch
-margin_right = 1 * inch
-margin_top = 1 * inch
-margin_bottom = 1 * inch
+# Verificar se o modelo existe
+if not os.path.isfile(model_path):
+    raise FileNotFoundError(f"O modelo não foi encontrado no caminho: {model_path}")
+
+# Carregar o modelo
+model = load_model(model_path)
+
+def predict_image(model, image_path, img_height, img_width):
+    img = load_img(image_path, target_size=(img_width, img_height))
+    img_array = img_to_array(img)
+    img_array = np.expand_dims(img_array, axis=0) / 255
+    prediction = model.predict(img_array)
+    return prediction
+
+def get_class_label(prediction, class_indices):
+    class_label = list(class_indices.keys())[np.argmax(prediction)]
+    return class_label
+
+def guardar_analise(db_path, image_path, class_label):
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    cursor.execute('''
+    INSERT INTO image_predictions(image_path, class_label, timestamp)
+    VALUES(?, ?, ?)
+    ''',(image_path, class_label, timestamp))
+    conn.commit()
+    conn.close()
+
+def get_db_path_from_project_root(db_name):
+    # Obtém o diretório atual do script
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    # Navega um nível acima
+    parent_dir = os.path.dirname(current_dir)
+    # Constrói o caminho completo para o banco de dados
+    db_path = os.path.join(parent_dir, db_name)
+    return db_path
 
 @csrf_exempt
 @login_required(login_url='/auth/')
@@ -45,12 +78,31 @@ def main(request):
         form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
             uploaded_file = request.FILES['file']
-            file_path = f'media/{uploaded_file.name}'
+            file_path = f'IA_Imagens/_Verificar/{uploaded_file.name}'
             with open(file_path, 'wb+') as destination:
                 for chunk in uploaded_file.chunks():
                     destination.write(chunk)
+
+            # Previsão de IA
+            class_indices = { 'Bom': 0, 'Ruim': 1 }  # Ajuste conforme seus índices de classe
+            prediction = predict_image(model, file_path, 150, 150)
+            class_label = get_class_label(prediction, class_indices)
+            # Insert no banco de dados
+            db_name = "db.sqlite3"
+            db_path = get_db_path_from_project_root(db_name)
+            image_path = "Null"
+            guardar_analise(db_path, image_path, class_label)
+            
+            # Mover o arquivo para a pasta _Analisadas
+            analyzed_directory = 'IA_Imagens/_Analisadas'
+            if not os.path.exists(analyzed_directory):
+                os.makedirs(analyzed_directory)
+            new_file_path = os.path.join(analyzed_directory, uploaded_file.name)
+            os.rename(file_path, new_file_path)
+
+            # Registrar a análise no banco de dados
             idPeca = form.cleaned_data['idPeca']
-            situPeca = 1
+            situPeca = 1  # Ajuste conforme sua lógica
             IdUsuario = request.user.id
             AnalisePeca.objects.create(
                 idPeca=idPeca,
@@ -58,8 +110,9 @@ def main(request):
                 IdUsuario=IdUsuario,
                 datahora=timezone.now()
             )
-            return JsonResponse({'success': True, 'message': 'Upload realizado com sucesso!'})
-        return JsonResponse({'success': False, 'message': 'Erro no envio do formulário.'})
+
+            return HttpResponse(f'Upload realizado com sucesso!, {class_label}')
+        return HttpResponse('erro')
     
     elif request.method == 'GET' and 'download_pdf' in request.GET:
         matplotlib.rcParams['text.color'] = 'black'
@@ -139,11 +192,10 @@ def main(request):
         df = pd.read_sql_query(query, conn)
         conn.close()
         if 'nomePeca' in df.columns:
-            pivot_table = df.pivot_table(index='nomePeca', columns='situPeca', aggfunc='size', fill_value=0)
+            pivot_table = df.pivot_table(columns='situPeca', aggfunc='size', fill_value=0)
             # Criar o gráfico
-            fig, ax = plt.subplots(figsize=(12,8))
+            fig, ax = plt.subplots(figsize=(10,6))
             pivot_table.plot(kind='bar', stacked=False, ax=ax, color=['#AB0B12', '#F97A82'])
-            ax.set_xlabel('Nome da Peça')
             ax.set_title('Número de Eventos por Nome da Peça e Situação')
             # Salvar o gráfico em um buffer
             buf = io.BytesIO()

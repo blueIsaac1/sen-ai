@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>SEN.AI</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static '/css/main.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Iceland&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/trocarTema.js' %}"></script>
+    <link rel="icon" type="image/x-icon" href="{% static '/images/LOGO_Gravata.png' %}">
+</head>
+
+<body class="corpoPagina">
+
+    <header class="topoPag">                                                           
+        <div class="divLogo">
+            <div class="logoContainer">
+                <img id="logoImg" class="logo" onclick="homeFunc()" src="/static/images/Logo_SenAI_NovaB.png" alt="">
+                <div class="tooltipLogo">RAILO Developers. SEN-AI.</div>
+            </div>
+        </div>
+        <div class="divNav">
+            <label onclick="homeFunc()" class="trocaPag temaTexto">Início</label>
+            <label onclick="graficFunc()" class="trocaPag temaTexto">Gráfico</label>
+            <label onclick="uploadFunc()" class="trocaPag temaTexto">Upload</label>
+        </div>
+        <div class="divUser">
+            <div class="boxUser">
+                <div onclick="dropdownUser()" class="clickAreaDropUser">
+                        <div class="userText temaTexto">{{ username }}</div>
+                        <img id="userImg" src="/static/images/userImgRed.png" alt="">
+                </div>
+                <div class="contMenuUser">
+                    <div class="menuUser">
+                        <div class="trocarTema">
+                            <div class="tooltipTema">Mudar Tema</div>
+                            <label class="switch" onclick="toggleDarkMode()">
+                                <input id="toggle-theme" type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <a href="{% url 'main' %}?logout_user=true">
+                            <div onclick="" class="logout">Sair</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+
+    <main class="corpoPag">
+
+        <div class="welcomeDiv">
+            <img id="welcomeImg" src="/static/images/welcomeImage.png" alt="">
+        </div>
+
+        <div class="graficDiv">
+            <div class="contCircularGraf">
+                <div class="grafico">
+                    {% if graph_url %}
+                        <img id="graficImage" class="graficImg" src="{{ graph_url }}" alt="Gráfico de Peças">
+                        <img id="graficImageDark" class="graficImgDark" src="{{ graph_url_dark }}" alt="Gráfico de Peças ">
+                    {% else %} 
+                        <h2>Não há dados para exibir o gráfico.</h2>
+                    {% endif %}
+                </div>
+                <!-- <div class="boa_ruim_div">
+                    <div class="primeiraCorDiv"></div>
+                    <p>BOAS</p>
+                    <span>|</span>
+                    <div class="segundaCorDiv"></div>
+                    <p>RUINS</p>
+                </div> -->
+            </div>
+            <!-- <div class="grafContainer">
+                <div class="contGrafDiv">
+                    <div class="contCircularGraf">
+                        <div class="grafico">
+                            {% if graph_url %}
+                                <img id="graficImage" class="graficImg" src="{{ graph_url }}" alt="Gráfico de Peças">
+                                <img id="graficImageDark" class="graficImgDark" src="{{ graph_url_dark }}" alt="Gráfico de Peças ">
+                            {% else %} 
+                                <h2>Não há dados para exibir o gráfico.</h2>
+                            {% endif %}
+                        </div>
+                        <h1><div class="primeiraCorDiv"></div>BOAS | <div class="segundaCorDiv"></div>RUINS</h1>
+                    </div>
+                    <div class="contInfoGraf">
+                        <h1>Ainda n sei oq colocar aqui</h1>
+                    </div>
+                </div>
+            </div> -->
+            <div class="tabelaGraf">
+                {{ html_table|safe }}
+                <table>
+                    <thead>
+                        <tr>
+                            <td class="tdFinal" colspan="4">
+                                <img src="/static/images/logoDS.png" alt="">
+                            </td>
+                        </tr>
+                </table>
+            </div>
+
+            <div class="escolaFimGraf">
+                <label onclick="" class="gerarPdfBtn">
+                    <a href="{% url 'main' %}?download_pdf=true" target="_blank">PDF Geral</a>
+                </label>
+                {% block verify %}
+                    {% if verify_today %}
+                        <label onclick="" class="gerarPdfBtn">
+                            <a href="{% url 'main' %}?download_pdf_today=true" target="_blank" id="PDFDiario">PDF Diário</a>
+                        </label>
+                    {% endif %}
+                {% endblock %}
+            </div>
+
+        </div>
+        <div class="uploadDiv">
+            <h1 class="textoUploadCima textTitleUploadSection">Faça upload da imagem com a peça à ser verificada:</h1>
+            <h1 class="textoUploadForm textTitleUploadSection">Imagem selecionada!<br> Selecione o tipo de peça e envie para verificação</h1>
+            <label id="drop-area" for="file-upload">
+                <img id="uploadImg" src="/static/images/uploadImg.png" alt="">
+            </label>
+            <form method="post" enctype="multipart/form-data" id="upload-form">
+                {% csrf_token %}    
+                <input id="file-upload" type="file" name="file" multiple />
+
+                <div id="imageContainer">
+                    <img id="uploadedImage" src="" alt="Imagem Upload" />
+                </div>
+                <div class="select_texto">
+                    {{ form.idPeca.label }} {{ form.idPeca }}
+                </div>
+                <div class="divEscolhaUpload">
+                    <button type="submit" class="enviar_btn_upload" onclick="openPopup()">Enviar</button>
+                </div>
+            </form>
+            <br>
+            {% block content %}
+                    {% if is_ruim %}
+                        <div class="respostaCheckBtn" onclick="respostaPecaRuim()">Verificar Análise Anterior</div>
+                    {% elif is_bom %}
+                        <div class="respostaCheckBtn" onclick="respostaPecaBoa()">Verificar Análise Anterior</div>
+                    {% endif %}
+            {% endblock %}
+            <div id="resetButton">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2z"/>
+                    <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466"/>
+                </svg>
+            </div>
+            <h1 class="textoUploadBaixo textTitleUploadSection">Clique para colocar a imagem:</h1>
+            <h4>IA de análise de imagens | SEN.AI</h4>
+            <!-- Colocar o if messages aqui -->
+            <div id="popupCheck" class="respostaCheckDiv">
+                <div class="topoCheck">
+                    <h1 class="textoCheck">A peça é </h1>
+                </div>
+                <div class="corpoCheck">
+                    <div class="imgCheck">
+                        <!-- Vamos usar backgroundImage com position center, size 100% e max height/width pra que ela altere de proporção mantendo o tamanho -->
+                    </div>
+                    
+                    <table id="image-table">
+                        <tbody id="image-list">
+                            <!-- As imagens adicionadas aparecerão aqui -->
+                        </tbody>
+                    </table>
+                    <div class="testeCliqueConfirma" onclick="respostaPecaBoa()">Clica pra ver o popup de peça boa</div>
+                    <div class="testeCliqueConfirma" onclick="respostaPecaRuim()">Clica pra ver o popup de peça ruim</div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer id="footer" class="fimPag">
+        <div class="primeiroFooter">
+            <h2 class="temaTexto">v1.0.0</h2>
+            <div onclick="toggleFooterSize()" class="contSeta">
+                <i id="seta" class='bx bx-chevron-up setaExpandFooter temaTexto'>
+                </i>
+                <span class="tooltip" id="tooltipSeta">Clique para Expandir</span>
+            </div>
+            <h2 class="temaTexto">| SEN.IA</h2>
+        </div>
+        <div class="segundoFooter">
+            <div class="footer_div_superior">
+                <div class="social_div">
+                    <h1>Continue Ligado</h1>
+                    <a><i class='bx bxl-github' ></i>Github</a>
+                    <a><i class='bx bxl-linkedin'></i>LinkedIn</a>
+                    <a><i class='bx bxl-instagram' ></i>Instagram</a>
+                    <a><i class='bx bxl-youtube' ></i>Youtube</a>
+                </div>
+                <div class="logods_div">
+                    <img src="/static/images/LogoDS.png" alt="LogoDS">
+                </div>
+                <div class="contato_div">
+                    <h1>Contato</h1>
+                    <a><i class='bx bx-pin' ></i>R. Antônio de Godoy, 5405 - SJRP</a>
+                    <a><i class='bx bx-envelope' ></i>email@email.com</a>
+                    <a><i class='bx bx-phone' ></i>(00) 12345-6789</a>
+                    <a><i class='bx bx-chat'></i><span class="span_link">Mensagem Direta</span></a>
+                </div>
+            </div>
+            <div class="footer_div_inferior">
+                <p class="footer_low1">© 2024-2024 <span class="span_link">RAILO</span> | Todos Direitos Reservados | Criado por <a><span class="span_link">RAILO</span></a></p>
+                <p class="footer_low2"><a>Informações da Empresa</a>|<a>Política de Privacidade</a>|<a>Termos & Condições</a></p>
+            </div>
+        </div>
+    </footer>
+    
+    <div onclick="fecharPopup()" id="fundoCinza"></div>
+    <div id="popupInfo" class="popupInfoDiv">
+        <div class="topo">
+            <img class="imgLogoPopup" src="/static/images/Logo_SenAI_NovaB.png" alt="">
+            <svg onclick="fecharPopup()" xmlns="http://www.w3.org/2000/svg" class="bi bi-x-lg" viewBox="0 0 16 16">
+                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+            </svg>
+        </div>
+        <div class="textoApresenta">
+            <h1>Essa é uma Inteligência Artificial (IA) de Análise de Imagens, é uma tecnologia que permite aos computadores interpretar e compreender o conteúdo visual de imagens. Utilizando algoritmos e modelos de aprendizado de máquina, a IA analisa imagens para identificar e processar informações visuais, como objetos, pessoas e textos. A partir de imagens recebidas, a IA aplica redes neurais profundas para extrair características e reconhecer padrões, fornecendo respostas como a classificação de objetos, a detecção de anomalias e a geração de descrições. Ela foi desenvolvida pela Equipe RAILO, em parceira com a DS Tecnologia Automotiva</h1>
+        </div>
+    </div>
+    <div onclick="mostrarPopupInfo()" class="sobrePopUpBtn">
+        ?
+    </div>
+    <div class="divResultado">
+        <svg onclick="fecharPopup()" xmlns="http://www.w3.org/2000/svg" class="fechar bi bi-x-lg" viewBox="0 0 16 16">
+            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+        </svg>
+        <div id="respostaPecaBoa" class="validaBox boa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" class="bi bi-check2" viewBox="0 0 16 16">
+                <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
+            </svg>
+            <h2 class="resultText">Peça Boa</h2>
+        </div>
+        <div id="respostaPecaRuim" class="validaBox ruim">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-frown" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                <path d="M4.285 12.433a.5.5 0 0 0 .683-.183A3.5 3.5 0 0 1 8 10.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.5 4.5 0 0 0 8 9.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683M7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5m4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5"/>
+            </svg>
+            <h2 class="resultText">Peça defeituosa</h2>
+        </div>
+        <h4>Utilize de nossa inteligência artificial para verificar outras peças</h4>
+        <h2 onclick="graficFunc()" class="btnSaida graficos">Gráficos</h2>
+        <h2 onclick="uploadFunc()" class="btnSaida outra">Verificar outra peça</h2>
+    </div>
+
+    <script src="/static/js/uploadImage.js"></script>
+    <script src="{% static 'js/uploadTroca.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var analiseResultado = "{{ analise_resultado|default_if_none:'' }}";
+            if (analiseResultado) {
+                if (analiseResultado === 'Bom') {
+                    respostaPecaBoa();
+                } else if (analiseResultado === 'Ruim') {
+                    respostaPecaRuim();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+.venv
+*.pyc
+venv
+.env
+*.log
+*.pot
+*.pyc
+__pycache__
+IA_Imagens

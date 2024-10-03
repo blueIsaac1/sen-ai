@@ -9,6 +9,7 @@ api_key = 'AIzaSyCdUc8hHD_Uf6yior7ujtW5wvPYMepoh5I'  # Substitua pela sua chave 
 os.environ["API_KEY"] = api_key
 genai.configure(api_key=os.environ["API_KEY"])
 
+
 # Função para carregar o conteúdo das páginas a partir de um arquivo JSON
 def carregar_conteudo(pasta):
     todos_conteudos = []
@@ -23,39 +24,26 @@ def carregar_conteudo(pasta):
                     print(f"Erro ao decodificar JSON do arquivo {arquivo}. Pulando...")
     return todos_conteudos
 
+# Função para obter inputs do usuário
 def obter_parametros_usuario():
     nome = input("Nome da pessoa: ")
     projeto = input("Nome do projeto: ")
-
-    # Menu de seleção para a área
-    print("Escolha a área de atuação:")
-    opcoes_area = ['tecnologia', 'agro', 'metalurgia', 'mecanica', 'robotica', 'automação', 'eletrica']
-    for i, opcao in enumerate(opcoes_area, start=1):
-        print(f"{i}. {opcao}")
-
-    escolha_area = int(input("Digite o número da opção desejada: "))
-    area = opcoes_area[escolha_area - 1] if 1 <= escolha_area <= len(opcoes_area) else "Opção inválida"
-
+    tema = input("Tema do projeto: ")
+    area = input("Área de atuação: ")
     esboco = input("Esboço - Como será o projeto: ")
     orcamento = input("Orçamento esperado: ")
-
-    # Menu de seleção para a extensão geográfica
-    print("Escolha a extensão geográfica:")
-    opcoes_extensao = ['Regional', 'Nacional', 'Mundial']
-    for i, opcao in enumerate(opcoes_extensao, start=1):
-        print(f"{i}. {opcao}")
-
-    escolha_extensao = int(input("Digite o número da opção desejada: "))
-    extensao = opcoes_extensao[escolha_extensao - 1] if 1 <= escolha_extensao <= len(opcoes_extensao) else "Opção inválida"
+    extensao = input("Extensão geográfica (Regional, Nacional, Mundial): ")
 
     return {
         "nome": nome,
         "projeto": projeto,
+        "tema": tema,
         "area": area,
         "esboco": esboco,
         "orcamento": orcamento,
         "extensao": extensao
     }
+
 
 # Função para obter análise da API Gemini
 def get_gemini_analysis_with_retry(content, user_inputs, max_retries=5, initial_delay=1):
@@ -91,8 +79,9 @@ def analise_page(content, inputs):
     return score, description
 
 def recomenda_investimento(conteudos, inputs):
-    scores = []
-    urls = []
+    best_option = None
+    best_score = 0
+    best_url = None
 
     for pagina in conteudos:
         arquivo = pagina['arquivo']
@@ -110,45 +99,26 @@ def recomenda_investimento(conteudos, inputs):
         score, description = analise_page(content_str, inputs)
         print(f"Arquivo: {arquivo} - Score: {score}.")
 
-        if score is not None:  # Certifica-se de que o score não é None
-            scores.append(score)
-            urls.append(item.get('url', 'URL não encontrada') if isinstance(item, dict) else 'URL não encontrada')
+        if score > best_score:
+            best_score = score
+            best_option = arquivo
+            # Tenta obter a URL do item, se for um dicionário
+            best_url = item.get('url', 'URL não encontrada') if isinstance(item, dict) else 'URL não encontrada'
 
         time.sleep(1)  # Pequeno delay entre as chamadas para evitar sobrecarga
 
-    if not scores:
-        return None, None  # Retorna None para ambos se não houver scores
-
-    # Verifica se todos os scores são 0
-    if all(score == 0 for score in scores):
-        print("Não há linhas de crédito disponíveis para este projeto.")
-        return None, None
-
-    # Encontra os maiores scores únicos
-    highest_scores = sorted(set(scores), reverse=True)
-    
-    # Obtém as URLs correspondentes ao maior score
-    best_urls = [urls[i] for i in range(len(scores)) if scores[i] == highest_scores[0]]
-
-    # Imprime o maior score e suas URLs
-    print(f"Melhor opção de linha de crédito: {best_urls}")
-
-    # Para o segundo maior score, obtém as URLs correspondentes
-    second_best_urls = []
-    if len(highest_scores) > 1:
-        second_best_urls = [urls[i] for i in range(len(scores)) if scores[i] == highest_scores[1]]
-    
-    # Imprime o segundo maior score e suas URLs, se existirem
-    if second_best_urls:
-        print(f"Segunda melhor opção de linha de crédito: {second_best_urls}")
-
-    return highest_scores[0], best_urls
+    return best_option, best_url
 
 def main():
     pasta_dados = 'DADOS'  # Nome da pasta contendo os arquivos JSON
     dados_paginas = carregar_conteudo(pasta_dados)
     user_inputs = obter_parametros_usuario()
-    recommendation, best_urls = recomenda_investimento(dados_paginas, user_inputs)
+    recommendation, url = recomenda_investimento(dados_paginas, user_inputs)
+
+    if recommendation:
+        print(f"Melhor opção de investimento encontrada: {url}")
+    else:
+        print("Nenhuma opção de investimento adequada foi encontrada.")
 
 if __name__ == "__main__":
     main()
